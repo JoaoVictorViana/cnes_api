@@ -70,10 +70,8 @@ def _fetch_file(fname, ftp, ftype):
         raise Exception("File {} not available".format(fname))
     if ftype == 'DBC':
         df = read_dbc_geopandas(fname, encoding='iso-8859-1')
-        df.to_csv('teste.csv')
     elif ftype == 'DBF':
         dbf = DBF(fname, encoding='iso-8859-1')
         df = pd.DataFrame(list(dbf))
-        df.to_csv('teste.csv')
     os.unlink(fname)
     return df
