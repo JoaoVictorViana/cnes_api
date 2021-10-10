@@ -16,25 +16,31 @@ class NpEncoder(json.JSONEncoder):
 
 @app.route("/<tipo>/<uf>/<ano>/<mes>/<page>/<per_page>")
 def hello_world(tipo: str, uf: str, ano: int, mes: int, page: int, per_page: int):
-    data_dict = []
+    per_page = int(per_page)
+    page = int(page)
+    data_dict = dict()
+
     df = download(tipo, uf, ano, mes)
 
-    count = len(df) / per_page
     index_start = ((page - 1) * per_page)
     index_final = index_start + per_page
 
-    data_dict.append({'quantidade': len(df), 'paginas': count, 'resultados' : []})
+    data_dict['quantidade'] = len(df)
+    data_dict['paginas'] = len(df) // per_page
+    data_dict['resultados'] = []
 
-    for _ in range(per_page):
+    df = df.iloc[index_start:index_final,:]
+
+    for row in range(per_page):
         row_dict = dict()
         
         for col_index in range(len(df.columns)):
-            row_dict[df.columns[col_index]] = df.iloc[index_start:index_final,col_index]
+            row_dict[df.columns[col_index]] = df.iloc[row,col_index]
         
         data_dict['resultados'].append(row_dict)
 
     response = app.response_class(
-        response=json.dumps(data_dict, cls=NpEncoder),
+        response=json.dumps(data_dict, cls=NpEncoder, indent=4),
         status=200,
         mimetype='application/json'
     )
