@@ -6,8 +6,6 @@ blinker
 certifi
 cffi
 chardet
-click
-click-plugins
 cloud-init
 colorama
 command-not-found
