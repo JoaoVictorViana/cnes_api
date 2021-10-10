@@ -1,3 +1,4 @@
+cffi
 Flask
 numpy
 dbfread
