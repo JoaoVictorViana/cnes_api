@@ -20,14 +20,16 @@ def hello_world(tipo: str, uf: str, ano: int, mes: int, page: int, per_page: int
     df = download(tipo, uf, ano, mes)
 
     count = len(df) / per_page
+    index_start = ((page - 1) * per_page)
+    index_final = index_start + per_page
 
     data_dict.append({'quantidade': len(df), 'paginas': count, 'resultados' : []})
 
-    for row in range(len(df)):
+    for _ in range(per_page):
         row_dict = dict()
         
         for col_index in range(len(df.columns)):
-            row_dict[df.columns[col_index]] = df.iloc[row,col_index]
+            row_dict[df.columns[col_index]] = df.iloc[index_start:index_final,col_index]
         
         data_dict['resultados'].append(row_dict)
 
