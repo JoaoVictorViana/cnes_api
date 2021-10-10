@@ -8,7 +8,6 @@ cffi
 chardet
 click
 click-plugins
-cligj
 cloud-init
 colorama
 command-not-found
