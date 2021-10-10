@@ -14,10 +14,14 @@ class NpEncoder(json.JSONEncoder):
             return obj.tolist()
         return super(NpEncoder, self).default(obj)
 
-@app.route("/<tipo>/<uf>/<ano>/<mes>")
-def hello_world(tipo: str, uf: str, ano: int, mes: int):
+@app.route("/<tipo>/<uf>/<ano>/<mes>/<page>/<per_page>")
+def hello_world(tipo: str, uf: str, ano: int, mes: int, page: int, per_page: int):
     data_dict = []
     df = download(tipo, uf, ano, mes)
+
+    count = len(df) / per_page
+
+    data_dict.append({'quantidade': len(df), 'paginas': count, 'resultados' : []})
 
     for row in range(len(df)):
         row_dict = dict()
@@ -25,7 +29,7 @@ def hello_world(tipo: str, uf: str, ano: int, mes: int):
         for col_index in range(len(df.columns)):
             row_dict[df.columns[col_index]] = df.iloc[row,col_index]
         
-        data_dict.append(row_dict)
+        data_dict['resultados'].append(row_dict)
 
     response = app.response_class(
         response=json.dumps(data_dict, cls=NpEncoder),
