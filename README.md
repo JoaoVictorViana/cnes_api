@@ -8,7 +8,7 @@
 
 ## Instalar
 
-pip -r ./requirements.tsx
+pip install -r ./requirements.tsx
 
 ## Como utilizar
 
