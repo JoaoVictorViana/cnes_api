@@ -8,7 +8,7 @@
 
 ## Instalar
 
-pip install -r ./requirements.tsx
+pip install -r ./requirements.txt
 
 ## Como utilizar
 
