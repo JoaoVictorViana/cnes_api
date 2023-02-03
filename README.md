@@ -27,3 +27,14 @@ http://localhost:5000/download/PF/CE/2021/07
 O padrão dos paramêtros são
 
 http://localhost:5000/download/tipo/uf/ano/mes
+
+
+## Docker
+
+Comando para gerar a imagem
+
+docker build .
+
+Comando para rodar o container
+
+docker run -p 5000:5000 #id
